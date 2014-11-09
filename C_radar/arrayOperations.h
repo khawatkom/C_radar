@@ -15,6 +15,6 @@ public:
 
 	complex<double> * shiftArray(complex<double> *x, int dataLength, int k);
 	double * complexAbs(fftw_complex *x, int dataLength);
-
+	complex<double> * resample(complex<double> *x, int dataLength, double factor);
 };
 
