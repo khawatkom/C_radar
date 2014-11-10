@@ -2,7 +2,8 @@
 //
 
 
-
+#define _CRT_SECURE_NO_DEPRECATE
+#include <stdio.h>
 #include "stdafx.h"
 #include "Windows.h"
 #include <time.h>
@@ -15,6 +16,8 @@
 #include <iostream>
 #include <chrono>
 #include "arrayOperations.h"
+#include <iostream>
+#include <fstream>
 
 using namespace std;
 
@@ -22,7 +25,7 @@ using namespace std;
 int _tmain(int argc, _TCHAR* argv[])
 {
 
-	int	n = 8;
+	int	n = 512;
 	arrayOperations arrayOp = arrayOperations();
 	fftw_plan fft;
 
@@ -30,34 +33,46 @@ int _tmain(int argc, _TCHAR* argv[])
 	fftw_complex *in, *out;
 	double *absIn;
 	x = (complex<double>*) malloc(sizeof(complex<double>) * n);
-	in = (fftw_complex*) malloc(sizeof(fftw_complex) * n);
-	out = (fftw_complex*) malloc(sizeof(fftw_complex) * n);
-	absIn = (double*) malloc(sizeof(double) * n);
+	
+	
+	
 
 	// generate data
-	for(int i=0; i<n; i++) x[i] = complex<double> (i, 0.0);
-	for(int i=0; i<n; i++) cout << x[i] << "\n";
-	cout << "End of actual data.\n";
+	for(int i=0; i<n; i++) x[i] = complex<double> (cos(2*M_PI*12*i/n), sin(2*M_PI*12*i/n));
+	FILE * pFile;
+	pFile = fopen("fft.txt", "w");
+	fprintf(pFile, "clear all; close all; clc; \ndata=[");
+	for(int i=0; i<n; i++) fprintf(pFile,"%3.5f + %3.5f*i\n", real(x[i]), imag(x[i]));
+	fprintf(pFile, "]; \n");
 
 	// shift data by k
-	double factor = 1.5;
+	double factor = 0.5;
 	complex<double> *resampled;
-	resampled = (complex<double>*) malloc(sizeof(complex<double>) * (int) ceil(n * factor));
+	resampled = (complex<double>*) malloc(sizeof(complex<double>) * (int) (ceil(n * factor)));
 	resampled = arrayOp.resample(x, n, factor);
-	for(int i=0; i<ceil(n*factor); i++) cout << resampled[i] << "\n";
-	cout << "End of " << factor << " factorized data.\n";
-	
+	fprintf(pFile, "\nresampled_data=[");
+	for(int i=0; i<(int) (ceil(n * factor)); i++) {fprintf(pFile, "%3.5f + %3.5f*i \n", real(resampled[i]), imag(resampled[i]));}
+	fprintf(pFile, "];\n");
+	fclose(pFile);	
+
+	free(resampled);
+	free(x);
+	fftw_cleanup();
+
 	//// take fft of data
-	//in = reinterpret_cast<fftw_complex*>(x);
-	//fft = fftw_plan_dft_1d(n, in, out, FFTW_FORWARD, FFTW_ESTIMATE);
+	//in = (fftw_complex*) malloc(sizeof(fftw_complex) * (int) (ceil(n * factor)));
+	//in = reinterpret_cast<fftw_complex*>(resampled);
+	//absIn = (double*) malloc(sizeof(double) * (int) (ceil(n * factor)));
+	//out = (fftw_complex*) malloc(sizeof(fftw_complex) * (int) (ceil(n * factor)));
+	//fft = fftw_plan_dft_1d((int) (ceil(n * factor)), in, out, FFTW_FORWARD, FFTW_ESTIMATE);
 	//fftw_execute(fft);
-	//for(int i=0; i<n; i++) {printf("freq %i: %f + %f*i \n", i, out[i][0], out[i][1]);}
-	//cout << "End of FFT of data.\n";
-
-
-
+	//fprintf(pFile, "\n M=[");
+	//for(int i=0; i<(int) (ceil(n * factor)); i++) {fprintf(pFile, "%.5f + %.5f*i \n", out[i][0], out[i][1]);}
+	//fprintf(pFile, "];\n");
+	//fprintf(pFile, "plot([0:%i], abs(M));", n-1);
+	//fclose(pFile);
 	//// take absolute value of fftw_complex data type
-	//absIn = arrayOp.complexAbs(out, n);
+	//absIn = arrayOp.complexAbs(out, (int) (ceil(n * factor)));
 	//for(int i=0; i<n; i++) {cout << absIn[i] << "\n";}
 	//cout << "End of absolute value of FFT of data.\n";
 
