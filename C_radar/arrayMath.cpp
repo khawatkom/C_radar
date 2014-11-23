@@ -28,11 +28,9 @@ complex<double> * arrayMath::shiftArray(complex<double>* x, int dataLength, int 
 
 double * arrayMath::complexAbs(fftw_complex *x, int dataLength)
 {
-	fftw_complex *in = (fftw_complex*) malloc(sizeof(fftw_complex) * dataLength);
-	in = x;
 	double *abs;
 	abs = (double*) malloc(sizeof(double) * dataLength);
-	for(int i=0; i<dataLength; i++) {abs[i] = (double) sqrt(pow(in[i][0], 2.0) + pow(in[i][1], 2.0));}
+	for(int i=0; i<dataLength; i++) {abs[i] = (double) sqrt(pow(x[i][0], 2.0) + pow(x[i][0], 2.0));}
 	return abs;
 }
 

@@ -14,6 +14,6 @@ public:
 	matchedFilter(void);
 	~matchedFilter(void);
 
-complex<double> * ambigutyFunction(complex<double> * referenceSignal, complex<double> * surveillenceSignal, int k, int dataLength, int nfft);
+double * ambigutyFunction(complex<double> * referenceSignal, complex<double> * surveillenceSignal, int k, int dataLength, int nfft);
 
 };
