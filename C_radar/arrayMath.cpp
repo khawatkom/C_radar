@@ -1,18 +1,20 @@
 #include "stdafx.h"
 #include <iostream>
-#include "arrayOperations.h"
+#include "arrayMath.h"
 #include <complex>
 #include "fftw3.h"
+#include <stdio.h>
+#include <string.h>
 using namespace std;
 
-arrayOperations::arrayOperations(void)
+arrayMath::arrayMath(void)
 {
 }
-arrayOperations::~arrayOperations(void)
+arrayMath::~arrayMath(void)
 {
 }
 
-complex<double> * arrayOperations::shiftArray(complex<double>* x, int dataLength, int k)
+complex<double> * arrayMath::shiftArray(complex<double>* x, int dataLength, int k)
 { 
 	int shiftIndex = 0;
 	complex<double> *shifted;
@@ -24,7 +26,7 @@ complex<double> * arrayOperations::shiftArray(complex<double>* x, int dataLength
 	return shifted;
 }
 
-double * arrayOperations::complexAbs(fftw_complex *x, int dataLength)
+double * arrayMath::complexAbs(fftw_complex *x, int dataLength)
 {
 	fftw_complex *in = (fftw_complex*) malloc(sizeof(fftw_complex) * dataLength);
 	in = x;
@@ -34,7 +36,7 @@ double * arrayOperations::complexAbs(fftw_complex *x, int dataLength)
 	return abs;
 }
 
-complex<double> * arrayOperations::resample(complex<double> *x, int dataLength, double factor) 
+complex<double> * arrayMath::resample(complex<double> *x, int dataLength, double factor) 
 {
 	double a_real, a_imag, b_real, b_imag;
 	complex<double> *resampled;
@@ -85,4 +87,20 @@ complex<double> * arrayOperations::resample(complex<double> *x, int dataLength, 
 		
 	}
 	return resampled;
+}
+
+
+complex<double> * arrayMath::elementMultiplication(complex<double> *x, complex<double> *y, int dataLength, string type) 
+{
+	complex<double> * result;
+	result = (complex<double>*) malloc(sizeof(complex<double>)*dataLength);
+
+	if (type == "conj") {
+		for(int i=0; i<dataLength; i++)
+			result[i] = x[i]*conj(y[i]);		
+	}else {
+		for(int i=0; i<dataLength; i++)
+			result[i] = x[i]*y[i];		
+	}
+	return result;
 }

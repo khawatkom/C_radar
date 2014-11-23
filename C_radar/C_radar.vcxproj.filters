@@ -24,7 +24,10 @@
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="arrayOperations.h">
+    <ClInclude Include="arrayMath.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="matchedFilter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -35,7 +38,10 @@
     <ClCompile Include="C_radar.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="arrayOperations.cpp">
+    <ClCompile Include="arrayMath.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="matchedFilter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

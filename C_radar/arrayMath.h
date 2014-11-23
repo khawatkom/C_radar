@@ -5,16 +5,18 @@
 using namespace std;
 #pragma once
 
-class arrayOperations
+class arrayMath
 {
 private:
 
 public:
-	arrayOperations(void);
-	~arrayOperations(void);
+	arrayMath(void);
+	~arrayMath(void);
+
 
 	complex<double> * shiftArray(complex<double> *x, int dataLength, int k);
 	double * complexAbs(fftw_complex *x, int dataLength);
 	complex<double> * resample(complex<double> *x, int dataLength, double factor);
+	complex<double> * elementMultiplication(complex<double> *x, complex<double> *y, int dataLength, string type);
 };
 

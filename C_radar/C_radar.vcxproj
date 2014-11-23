@@ -83,13 +83,15 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="arrayOperations.h" />
+    <ClInclude Include="arrayMath.h" />
+    <ClInclude Include="matchedFilter.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="arrayOperations.cpp" />
+    <ClCompile Include="arrayMath.cpp" />
     <ClCompile Include="C_radar.cpp" />
+    <ClCompile Include="matchedFilter.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
